@@ -1,9 +1,9 @@
-public class Employees {
+public class Employee {
     private String name;
     private double salary;
     private Role role;
 
-    public Employees(String name, double salary, Role role)    {
+    public Employee(String name, double salary, Role role)    {
         this.name = name;
         this.salary = salary;
         this.role = role;
@@ -19,5 +19,9 @@ public class Employees {
 
     public Role getRole()   {
         return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
