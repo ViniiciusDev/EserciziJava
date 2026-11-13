@@ -1,14 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public class Main {
 
         private static final Scanner in = new Scanner(System.in);
         private static final List<Employee> employees = new ArrayList<>();
-        private static final Map<Role, Integer> mapEmployeesQuantity = new HashMap<>();
+
 
         public static void main(String[] args)  {
             int option;
@@ -16,23 +12,15 @@ public class Main {
             do {
                 showMenu();
                 option = in.nextInt();
-                if (option == 1){
-                    addEmployee();
-                }
-                if (option == 2){
-                    showEmployees();
-                }
-                if (option == 3)    {
-                    showFinalSalary();
-                }
-                if (option == 4)    {
-                    showEmployeeWithBiggestSalary();
-                }
-                if(option == 5) {
-                    showEmployeesQuantity();
-                }
-                if (option == 6)    {
-                    findEmployeeByName();
+                switch (option) {
+                    case 1 -> addEmployee();
+                    case 2 -> showEmployees();
+                    case 3 -> showFinalSalary();
+                    case 4 -> showEmployeeWithBiggestSalary();
+                    case 5 -> showEmployeesQuantity();
+                    case 6 -> findEmployeeByName();
+                    case 7 -> System.out.println("Chiudendo...");
+                    default -> System.out.println("Opzione non valida.");
                 }
             } while (option != 7);
         }
@@ -51,16 +39,21 @@ public class Main {
         }
 
         private static void addEmployee()   {
-            System.out.println("Aggiungere nome employee: ");
+            System.out.println("Aggiungere nome dipendente: ");
             String name = in.next();
             System.out.println("Aggiungere stipendio base: ");
             double salary = in.nextDouble();
             System.out.println("Aggiungere Ruolo: ");
-            Role role = Role.valueOf(in.next());
+            Role role = Role.valueOf(in.next().toUpperCase());
             employees.add(new Employee(name, salary, role));
         }
 
         private static void showEmployees() {
+            if(employees.isEmpty()) {
+                System.out.println("Non ho trovato alcun dipendente registrato!");
+                return;
+            }
+
             for (Employee employee : employees) {
                 System.out.println("Nome: " + employee.getName());
                 System.out.println("Ruolo: " + employee.getRole().getDescription());
@@ -93,6 +86,7 @@ public class Main {
         }
 
         private static void showEmployeesQuantity() {
+            Map<Role, Integer> mapEmployeesQuantity = new HashMap<>();
             for(Employee employee : employees)  {
                 int actualQuantity = mapEmployeesQuantity.getOrDefault(employee.getRole(), 0);
                 mapEmployeesQuantity.put(employee.getRole(), actualQuantity + 1);
